@@ -1,0 +1,4 @@
+service : {
+  // You will define your actual canister methods here, e.g.:
+  // greet: (text) -> (text) query;
+}

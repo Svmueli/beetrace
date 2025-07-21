@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "src/backend"
+]
+resolver = "2"
+
