@@ -1,0 +1,31 @@
+{
+  "canisters": {
+    "backend": { 
+      "type": "rust",
+      "workspace": "backend", 
+      "candid": "src/backend/src/backend.did", 
+      "package": "backend"
+    },
+    "frontend": {
+      "type": "assets",
+      "source": ["src/frontend/out"],
+      "build": "cd src/frontend && npx next build" 
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    },
+    "ic": {
+      "providers": ["https://boundary.ic0.app"]
+    }
+  },
+  "version": 1
+}

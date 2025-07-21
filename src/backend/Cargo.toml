@@ -1,0 +1,16 @@
+[package]
+name = "backend" # <-- ENSURE THIS MATCHES "backend"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+candid = "0.10" # This version is often stable, but can be updated to "0.19" if other errors arise
+ic-cdk = "0.18.5" # Update this
+ic-cdk-macros = "0.18.5" # Update this
+ic-cdk-timers = "0.12" # Update this to match ic-cdk or a compatible version
+serde = { version = "1.0", features = ["derive"] }
