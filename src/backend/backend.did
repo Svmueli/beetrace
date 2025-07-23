@@ -1,0 +1,19 @@
+// Define the HoneyBatch record type, as used in  frontend
+
+type HoneyBatch = record {
+    id: nat64;          // Corresponds to Rust's u64 or BigInt
+    beekeeper_id: principal; // Corresponds to Rust's Principal
+    location: text;     // Corresponds to Rust's String
+    quality: text;      // Corresponds to Rust's String
+    timestamp: nat64;   // Corresponds to Rust's u64 or BigInt (e.g., seconds since epoch)
+};
+
+// Define the service interface with all backend methods
+
+service : {
+    "greet": (text) -> (text) query;
+    "mint_honey_batch": (text, text) -> (variant { Ok : nat64; Err : text });
+    "get_honey_batch_details": (nat64) -> (opt HoneyBatch) query;
+    // IMPORTANT: Add any other functions your Rust backend exposes here
+    // For example, if you have a `get_all_batches` or `update_batch`, add them.
+}

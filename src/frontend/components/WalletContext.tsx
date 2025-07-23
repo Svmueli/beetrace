@@ -1,26 +1,17 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { AuthClient } from '@dfinity/auth-client';
-import { Actor, ActorMethod, HttpAgent, Identity, Principal } from '@dfinity/agent';
-import { createActor as createBackendActor, canisterId as backendCanisterId } from '../../../declarations/backend'; // Adjust path based on your dfx generate output
+// Ensure ActorSubclass is imported along with others
+import { Actor, ActorMethod, HttpAgent, Identity, ActorSubclass } from '@dfinity/agent';
+import { Principal } from '@dfinity/principal';
 
-// Define types for your backend actor methods if you need stronger typing
-// For now, we'll use a generic ActorMethod<any>
-interface _SERVICE {
-    greet: ActorMethod<[string], string>;
-    mint_honey_batch: ActorMethod<[string, string], { Ok: bigint } | { Err: string }>;
-    get_honey_batch_details: ActorMethod<[bigint], [] | [HoneyBatch]>;
-    // Add other backend methods as you implement them
-}
+// --- MODIFIED IMPORT PATH AND TYPING ---
+// Import the generated createActor function and canisterId
+import { createActor as createBackendActor, canisterId as backendCanisterId } from '../../declarations/backend';
+// Import the generated _SERVICE type and HoneyBatch interface directly from backend.did.d.ts
+import type { _SERVICE as BackendService, HoneyBatch } from '../../declarations/backend/backend.did';
 
-// Assuming HoneyBatch is defined in your backend.did.d.ts
-// For now, we'll just define a simplified version here if needed for frontend context:
-interface HoneyBatch {
-    id: bigint;
-    beekeeper_id: Principal;
-    location: string;
-    quality: string;
-    timestamp: bigint;
-}
+// --- REMOVED MANUAL INTERFACES HERE - NOW IMPORTED FROM .did.d.ts ---
+// The manual interface _SERVICE and HoneyBatch definitions are removed as they are now imported.
 
 
 interface WalletContextType {
@@ -28,7 +19,8 @@ interface WalletContextType {
     authClient: AuthClient | null;
     identity: Identity | null;
     principal: Principal | null;
-    backendActor: Actor | null; // Typed backend actor
+    // --- MODIFIED TYPE FOR backendActor ---
+    backendActor: ActorSubclass<BackendService> | null; // Use the imported BackendService type
     login: () => Promise<void>;
     logout: () => Promise<void>;
     loading: boolean;
@@ -40,7 +32,8 @@ export const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     const [authClient, setAuthClient] = useState<AuthClient | null>(null);
     const [identity, setIdentity] = useState<Identity | null>(null);
     const [principal, setPrincipal] = useState<Principal | null>(null);
-    const [backendActor, setBackendActor] = useState<Actor | null>(null);
+    // --- MODIFIED TYPE FOR backendActor STATE ---
+    const [backendActor, setBackendActor] = useState<ActorSubclass<BackendService> | null>(null);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -62,7 +55,9 @@ export const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
             // Create actor for your backend canister
             const actor = createBackendActor(backendCanisterId, { agent });
-            setBackendActor(actor as Actor<_SERVICE>); // Type assertion here
+            // --- NO MORE TYPE ASSERTION NEEDED HERE! ---
+            // createBackendActor now returns ActorSubclass<BackendService> due to generated types
+            setBackendActor(actor);
         }
         setLoading(false);
     };
