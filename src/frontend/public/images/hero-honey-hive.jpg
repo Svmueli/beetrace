@@ -1,4 +1,0 @@
-# You can create a small blank image for testing:
-convert -size 800x600 xc:lightgray images/hero-honey-hive.jpg
-# If 'convert' is not installed (ImageMagick), just skip this or create a tiny dummy file:
-# echo "placeholder image" > images/hero-honey-hive.jpg
