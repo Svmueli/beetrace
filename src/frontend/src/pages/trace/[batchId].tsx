@@ -2,8 +2,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useWallet } from '../../components/WalletContext';
-import { Principal } from '@dfinity/agent';
-
+import { Principal } from '@dfinity/principal';
 // Assuming HoneyBatch is defined or can be imported from your backend declarations
 // For now, let's redefine it here if not imported
 interface HoneyBatch {
@@ -32,7 +31,7 @@ export default function TraceBatchPage() {
         // Ensure batchId is converted to a BigInt if your backend expects it as bigint
         const idAsBigInt = BigInt(batchId as string);
         // Type assertion for backendActor is temporary, best to ensure proper type inference
-        const result = await (backendActor as any).get_honey_batch_details(idAsBigInt);
+        const result = await backendActor.get_honey_batch_details(idAsBigInt);
 
         if (result) {
           setBatchDetails(result);

@@ -1,15 +1,22 @@
 {
   "canisters": {
-    "backend": { 
+    "backend": {
       "type": "rust",
-      "workspace": "backend", 
-      "candid": "src/backend/src/backend.did", 
+      "workspace": "backend",
+      "candid": "src/backend/src/backend.did",
       "package": "backend"
     },
     "frontend": {
       "type": "assets",
       "source": ["src/frontend/out"],
-      "build": "cd src/frontend && npx next build" 
+      "build": [
+        "npm install --prefix src/frontend",
+        "dfx generate",
+        "cd src/frontend && npx next build"
+      ],
+      "dependencies": [
+        "backend"
+      ]
     }
   },
   "defaults": {

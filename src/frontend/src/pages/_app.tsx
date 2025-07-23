@@ -1,8 +1,7 @@
 
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { WalletProvider } from '../components/WalletContext'; // Import your WalletProvider
-
+import { WalletProvider } from '../../components/WalletContext'; // Import your WalletProvider
 // Make sure your global CSS is imported
 import '../styles/globals.css';
 

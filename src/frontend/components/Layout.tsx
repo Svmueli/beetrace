@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import Head from 'next/head';
 import Link from 'next/link'; // For navigation
 import { useWallet } from './WalletContext'; // Import the wallet context
-import { Principal } from '@dfinity/agent'; // For Principal type
+import { Principal } from '@dfinity/principal'; // For Principal type
 
 interface LayoutProps {
   children: ReactNode;
